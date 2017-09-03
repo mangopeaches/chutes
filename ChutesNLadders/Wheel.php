@@ -3,9 +3,10 @@
  * Class to represent the spinning wheel
  * @author Tom Breese
  */
-namespace Chutes;
+namespace ChutesNLadders;
 
 class Wheel {
+	
 	/**
 	 * Lower bounds for the wheels values
 	 */

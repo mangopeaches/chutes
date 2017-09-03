@@ -1,17 +1,18 @@
 <?php
 /**
  * Represents the game board
- * @author Tom Breese
+ * @author Tom Breese <thomasjbreese@gmail.com>
  */
-namespace Chutes;
+namespace ChutesNLadders;
 
 class Board {
+
 	/**
 	 * define constants for chutes and ladders specials
 	 */
 	const CHUTE = 1;
 	const LADDER = 2;
-	// stuck indicates the player did not move this turn (they exceeded th board boundaries)
+	// stuck indicates the player did not move this turn (they exceeded the board boundaries)
 	const STUCK = 3;
 
 	/**
@@ -41,30 +42,30 @@ class Board {
 		93 => ['type' => self::CHUTE, 'go_to' => 73],
 		95 => ['type' => self::CHUTE, 'go_to' => 75],
 		98 => ['type' => self::CHUTE, 'go_to' => 78],
-		];
+	];
 
 	/**
 	 * Returns the movement position based on current postion and number of spaces to move
-	 * @param int $current_position current position on the board
+	 * @param int $currentPosition current position on the board
 	 * @param int $moves total spaces to move
 	 * @return int $status['new_position'] position for which to move
 	 * @return int $status['special'] either CHUTE or LADDER or false when not applicable
 	 */
-	public static function move($current_position, $moves) {
+	public static function move($currentPosition, $moves) {
 		$status = [];
 		// calculate the next movement
-		$next_position = $current_position + $moves;
+		$nextPosition = $currentPosition + $moves;
 		// check if this is a special position and move accordingly
-		if (array_key_exists($next_position, self::$specials)) {
-			$status['new_position'] = self::$specials[$next_position]['go_to'];
-			$status['special'] = self::$specials[$next_position]['type'];
+		if (array_key_exists($nextPosition, self::$specials)) {
+			$status['new_position'] = self::$specials[$nextPosition]['go_to'];
+			$status['special'] = self::$specials[$nextPosition]['type'];
 		} else {
 			// make sure we haven't exceeded the array bounds, in which case we just can't move
-			if ($next_position > 100) {
-				$status['new_position'] = $current_position;
+			if ($nextPosition > 100) {
+				$status['new_position'] = $currentPosition;
 				$status['special'] = self::STUCK;
 			} else {
-				$status['new_position'] = $next_position;
+				$status['new_position'] = $nextPosition;
 				$status['special'] = false;
 			}
 		}
@@ -73,10 +74,10 @@ class Board {
 
 	/**
 	 * Returns whether or not the position is a winning postion
-	 * @param int $current_position current position for the player
+	 * @param int $currentPosition current position for the player
 	 * @return bool whether or not the player has won the game
 	 */
-	public static function winner($current_position) {
-		return $current_position == 100;
+	public static function winner($currentPosition) {
+		return $currentPosition == 100;
 	}
 }
